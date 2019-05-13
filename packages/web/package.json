@@ -1,0 +1,82 @@
+{
+  "name": "pgos-app",
+  "version": "1.0.0",
+  "description": "PGOS Web App",
+  "main": "build/main/index.js",
+  "typings": "build/main/index.d.ts",
+  "repository": "https://github.com/drojas/pgos-app",
+  "license": "MIT",
+  "keywords": [],
+  "eslintConfig": {
+    "root": true
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "describe": "npm-scripts-info",
+    "build": "run-s clean && run-p build:*",
+    "build:main": "tsc -p tsconfig.json --noEmit && webpack --config ./webpack.config.js --mode development",
+    "fix": "run-s fix:*",
+    "fix:prettier": "prettier 'src/**/*.ts' --write",
+    "fix:eslint": "eslint --fix 'src/**/*.ts' --ext .ts",
+    "test": "run-s build test:*",
+    "test:lint": "eslint . --ignore-pattern dist --ext .ts && prettier 'src/**/*.ts' --list-different",
+    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+    "doc": "run-s doc:html && opn build/docs/index.html",
+    "doc:html": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --out build/docs",
+    "doc:json": "typedoc src/ --exclude **/*.spec.ts --target ES6 --mode file --json build/docs/typedoc.json",
+    "reset": "git clean -dfx && git reset --hard && npm i",
+    "clean": "trash dist test"
+  },
+  "scripts-info": {
+    "info": "Display information about the package scripts",
+    "build": "Clean and rebuild the project",
+    "fix": "Try to automatically fix any linting problems",
+    "test": "Lint and unit test the project",
+    "watch": "Watch and rebuild the project on save, then rerun relevant tests",
+    "doc": "Generate HTML API documentation and open it in a browser",
+    "doc:json": "Generate API documentation in typedoc JSON format",
+    "reset": "Delete all untracked files and reset the repo to the last commit"
+  },
+  "engines": {
+    "node": ">=8.9"
+  },
+  "dependencies": {
+    "@vaadin/router": "^1.2.0",
+    "@webcomponents/webcomponentsjs": "^2.2.10",
+    "lit-element": "^2.1.0",
+    "pwa-helpers": "^0.9.1",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/webcomponents.js": "^0.6.34",
+    "@typescript-eslint/eslint-plugin": "^1.8.0",
+    "@typescript-eslint/parser": "^1.8.0",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^2.0.2",
+    "compression-webpack-plugin": "^2.0.0",
+    "eslint": "^5.16.0",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-formatter-pretty": "^2.1.1",
+    "eslint-plugin-prettier": "^3.1.0",
+    "html-webpack-plugin": "^3.2.0",
+    "npm-run-all": "^4.1.5",
+    "opn-cli": "^4.0.0",
+    "prettier": "^1.17.0",
+    "source-map-loader": "^0.2.4",
+    "trash-cli": "^1.4.0",
+    "tslib": "^1.9.3",
+    "typedoc": "^0.13.0",
+    "typescript": "^3.4.5",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.3.1",
+    "webpack-merge": "^4.2.1"
+  }
+}
